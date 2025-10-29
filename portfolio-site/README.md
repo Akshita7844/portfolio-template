@@ -1,142 +1,144 @@
-# AI/ML Product Engineer Portfolio
+# 💼 Portfolio Website — Quick Start
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAkshita7844%2Fportfolio&project-name=portfolio-site&repository-name=portfolio&root-directory=portfolio-site&build-command=npm%20run%20build&output-directory=dist)
+**👉 For detailed beginner-friendly instructions, see the [main README](../README.md) in the root directory.**
 
-Use it your way:
-- Template (recommended): https://github.com/Akshita7844/portfolio-template/generate
-- Clone: `git clone https://github.com/Akshita7844/portfolio-template`
-- Run: `cd portfolio/portfolio-site && npm install && npm run dev`
+## ⚡ Fast Track (If You're Comfortable with Tech)
 
-A beautiful, modern portfolio website built with React, Vite, and Tailwind CSS.
+### 1. Get Your Copy
 
-## Features
+- **Template Button:** Click "Use this template" on GitHub
+- **Direct Link:** https://github.com/Akshita7844/portfolio-template/generate
 
-- ✨ Modern, responsive design with glassmorphism effects
-- 🎨 Gradient animations and smooth scrolling
-- 💼 Professional sections: About, Experience, Projects, Skills
-- 🚀 Optimized for GitHub Pages deployment
-- 📱 Fully responsive and mobile-friendly
+### 2. Edit Your Content
 
-## Local Development
+**Main file to edit:** `src/App.jsx`
+
+- Find and replace:
+  - Your name and title
+  - `experiences` array → Your work history
+  - `projects` array → Your projects
+  - `skills` array → Your skills
+  - Social links in footer
+
+### 3. Add Your Photo
+
+1. Upload to: `public/your-photo.jpg`
+2. In `App.jsx`, change: `src="/Profile_Photo.PNG"` → `src="/your-photo.jpg"`
+
+### 4. Deploy (One-Click!)
+
+1. Go to: https://vercel.com/new
+2. Import your repository
+3. **Important:** Set **Root Directory** to: `portfolio-site`
+4. Deploy!
+
+Your site will be live at: `https://your-repo-name.vercel.app`
+
+---
+
+## 🛠️ Local Development (Optional)
+
+If you want to preview changes locally before deploying:
 
 ### Prerequisites
+- Node.js (v20 or higher) - Download from https://nodejs.org
 
-- Node.js (v20 or higher)
-- npm or yarn
+### Steps
 
-### Installation
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-1. Install dependencies:
-```bash
-npm install
+2. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open in browser:**
+   - Visit: `http://localhost:5173`
+   - The page auto-refreshes when you make changes!
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+   - Output goes to `dist/` folder
+
+---
+
+## 📁 Project Structure
+
+```
+portfolio-site/
+├── public/              # Your images (upload photo here)
+│   ├── placeholder.svg  # Default placeholder
+│   └── favicon.svg
+├── src/
+│   ├── App.jsx          # ⭐ Main file - edit your content here!
+│   ├── App.css
+│   ├── index.css
+│   └── main.jsx
+├── index.html           # HTML template
+├── package.json         # Dependencies (don't edit unless needed)
+└── vite.config.js       # Build config (don't edit unless needed)
 ```
 
-2. Start the development server:
-```bash
-npm run dev
-```
+---
 
-3. Open your browser and navigate to `http://localhost:5173`
+## 🎨 Customization
 
-## Building for Production
+### Quick Edits
 
-```bash
-npm run build
-```
+**Everything is in `src/App.jsx`:**
 
-The build output will be in the `dist` folder.
+- **Name/Title:** Search for your name in the hero section
+- **Experience:** Find `const experiences = [...]`
+- **Projects:** Find `const projects = [...]`
+- **Skills:** Find `const skills = [...]`
+- **Social Links:** Search footer for `href="...`
 
-## Deploy (Vercel Recommended)
+### Color Scheme
 
-### Vercel (1-click, auto-previews)
+Edit `tailwind.config.js` to change colors. Default is cyan/teal.
 
-1) Import the repo in Vercel
-- Framework Preset: Vite
-- Root Directory: `portfolio-site`
-- Build Command: `npm run build`
-- Output Directory: `dist`
+---
 
-2) On push to `main`, Production updates automatically.
-3) Every PR gets a Preview URL posted by Vercel.
+## 🚀 Deployment Options
 
-### GitHub Pages (Alternative)
+### Vercel (Recommended - Easiest)
 
-### Option 1: Automatic Deployment (Recommended)
+1. Visit: https://vercel.com/new
+2. Import your GitHub repository
+3. Set **Root Directory:** `portfolio-site`
+4. Deploy!
 
-1. Push this code to your GitHub repository
-2. Go to your repository Settings → Pages
-3. Select "GitHub Actions" as the source
-4. The site will automatically deploy on every push to `main` branch
+✅ Auto-updates on every push to main branch  
+✅ Free HTTPS & custom domain option  
+✅ Preview deployments for each PR
 
-### Option 2: Manual Deployment
+### GitHub Pages
 
-```bash
-# Build the project
-npm run build
+1. Repository → **Settings** → **Pages**
+2. Source: **GitHub Actions**
+3. Your site: `https://username.github.io/repo-name`
 
-# Deploy using gh-pages (install if needed: npm install -g gh-pages)
-npx gh-pages -d dist
-```
+---
 
-## Use This as a Template
+## ❓ Need More Help?
 
-Pick one:
-- Use template (fastest): https://github.com/Akshita7844/portfolio-template/generate
-- Fork: fork → edit → deploy
-- Degit (no history):
-  ```bash
-  npx degit Akshita7844/portfolio-template portfolio-yourname
-  cd portfolio-yourname/portfolio-site
-  npm install
-  npm run dev
-  ```
+**See the main [README.md](../README.md) for:**
+- Detailed step-by-step instructions
+- Troubleshooting guide
+- Complete customization guide
+- Photo upload instructions
 
-## Customization
+---
 
-### Update Your Information
+## 📝 License
 
-Edit `src/App.jsx` to customize:
-- Your name and title
-- Professional experiences
-- Projects showcase
-- Skills and expertise
-- Contact information and social links
+MIT License — Free to use for any purpose!
 
-### Change Colors
+---
 
-Edit `tailwind.config.js` to customize the color scheme:
-
-```js
-colors: {
-  'primary': '#6366f1',
-  'secondary': '#8b5cf6',
-  'accent': '#ec4899',
-}
-```
-
-### Add New Sections
-
-You can add new sections by:
-1. Creating new sections in `App.jsx`
-2. Adding navigation links in the navbar
-3. Following the existing pattern for glass-effect styling
-
-## Share Your Live Portfolio
-
-- Live URL: `https://akshita-mishra.vercel.app`
-- Optional badge: `[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)`
-
-## Tech Stack
-
-- **React** - UI framework
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling
-- **GitHub Pages** - Hosting
-
-## License
-
-MIT License - feel free to use this for your own portfolio!
-
-## Contact
-
-For questions or suggestions, please reach out!
+**Built with:** React + Vite + Tailwind CSS
