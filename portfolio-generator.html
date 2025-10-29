@@ -699,10 +699,8 @@ ${achievements}
             }).join(',\n');
             
             const code = `// ============================================
-// COPY THIS CODE TO: portfolio-site/src/App.jsx
-// Replace the existing arrays starting around line 51
-// ============================================
-
+// PASTE BETWEEN THE MARKERS BELOW IN App.jsx
+// ======= BEGIN_DATA_BLOCK (experiences, projects, skills) =======
 const experiences = [
 ${expCode}
   ]
@@ -714,23 +712,13 @@ ${projCode}
 const skills = [
 ${skillsList}
   ]
+// ======= END_DATA_BLOCK =======
 
-// ============================================
-// ALSO UPDATE THESE IN App.jsx:
-// ============================================
-// Line ~412: Replace name
+// ======= BEGIN_HERO_BLOCK (name, title, bio, email) =======
 <span className="text-white">${generatedData.name}</span>
-
-// Line ~415: Replace title  
 <span className="gradient-text">${generatedData.title}</span>
-
-// Line ~418: Replace bio
 ${generatedData.bio}
-
-// Line ~422: Replace email
 href="mailto:${generatedData.email}"
-
-// Footer section: Update social links
 ${generatedData.github ? `href="https://github.com/${generatedData.github}"` : '// Add GitHub'}
 ${generatedData.linkedin ? `href="${generatedData.linkedin}"` : '// Add LinkedIn'}
 ${generatedData.twitter ? `href="https://twitter.com/${generatedData.twitter.replace('@', '')}"` : '// Add Twitter'}`;
@@ -752,3 +740,4 @@ ${generatedData.twitter ? `href="https://twitter.com/${generatedData.twitter.rep
     </script>
 </body>
 </html>
+
