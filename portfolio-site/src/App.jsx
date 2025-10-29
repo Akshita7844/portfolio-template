@@ -187,7 +187,9 @@ const experiences = [
     { name: "CI/CD Pipelines", color: "from-cyan-500 to-teal-600", category: "MLOps" },
     { name: "Model Deployment", color: "from-green-500 to-green-600", category: "MLOps" },
     
-    // Backend & APIs
+  // ======= END_DATA_BLOCK =======
+
+  // Backend & APIs
     { name: "FastAPI", color: "from-green-500 to-green-600", category: "Backend" },
     { name: "REST APIs", color: "from-blue-500 to-blue-600", category: "Backend" },
     { name: "Flask", color: "from-yellow-500 to-yellow-600", category: "Backend" },
