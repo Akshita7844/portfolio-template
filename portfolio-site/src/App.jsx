@@ -399,7 +399,7 @@ function App() {
                 <div className="relative w-full h-full rounded-2xl overflow-hidden">
                   <img 
                     src="/placeholder.svg" 
-                    alt="Akshita Mishra" 
+                    alt="Your Name - Portfolio Photo" 
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
