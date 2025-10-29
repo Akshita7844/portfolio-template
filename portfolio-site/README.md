@@ -2,6 +2,20 @@
 
 **👉 For detailed beginner-friendly instructions, see the [main README](../README.md) in the root directory.**
 
+## 🎯 No-Code Option (Easiest!)
+
+**Use the visual form generator!** No coding needed - just fill out a form.
+
+1. Open `portfolio-generator.html` (in root directory) in any browser
+2. Fill in your information
+3. Generate your code
+4. Copy-paste into `App.jsx`
+5. Deploy to Vercel!
+
+👉 See main [README.md](../README.md) for detailed no-code instructions
+
+---
+
 ## ⚡ Fast Track (If You're Comfortable with Tech)
 
 ### 1. Get Your Copy

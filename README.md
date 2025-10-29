@@ -32,6 +32,35 @@ You'll need:
 
 ---
 
+## 🎯 Option 0: No-Code Generator (Easiest - No Editing Required!)
+
+**NEW!** Use our visual form generator - fill in a form, get your code ready!
+
+1. **Open the Generator:**
+   - Download `portfolio-generator.html` from this repo
+   - OR open it directly on GitHub: [View Raw](https://raw.githubusercontent.com/Akshita7844/portfolio-template/main/portfolio-generator.html)
+   - Save the file and open it in any web browser (Chrome, Firefox, Safari, etc.)
+
+2. **Fill in the Form:**
+   - Enter your name, title, bio
+   - Add your work experience (click "+ Add Another Job" for multiple)
+   - Add your projects (click "+ Add Another Project" for multiple)
+   - Add your skills (comma-separated)
+   - Fill in social links
+
+3. **Click "Generate My Portfolio Code"**
+   - Your custom code will appear below
+   - Copy the generated code
+
+4. **Use the Template:**
+   - Follow Step 1 below to create your copy
+   - Then paste the generated code into `App.jsx` (the generator tells you exactly where)
+   - Deploy to Vercel!
+
+**That's it!** You never need to understand or edit code - just fill out a form! 🎉
+
+---
+
 ## 🚀 Method 1: Get Your Own Copy (5 minutes)
 
 ### Step 1: Create Your Copy from This Template
