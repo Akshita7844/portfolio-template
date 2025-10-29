@@ -187,9 +187,7 @@ function App() {
     { name: "CI/CD Pipelines", color: "from-cyan-500 to-teal-600", category: "MLOps" },
     { name: "Model Deployment", color: "from-green-500 to-green-600", category: "MLOps" },
     
-  // ======= END_DATA_BLOCK =======
-
-  // Backend & APIs
+    // Backend & APIs
     { name: "FastAPI", color: "from-green-500 to-green-600", category: "Backend" },
     { name: "REST APIs", color: "from-blue-500 to-blue-600", category: "Backend" },
     { name: "Flask", color: "from-yellow-500 to-yellow-600", category: "Backend" },
@@ -253,6 +251,7 @@ function App() {
     { name: "Audio-to-Text", color: "from-blue-500 to-blue-600", category: "AI/ML" },
     { name: "Image Captioning", color: "from-indigo-500 to-indigo-600", category: "AI/ML" }
   ]
+  {/* ======= END_DATA_BLOCK ======= */}
 
   const awards = [
     {
