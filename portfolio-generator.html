@@ -3,56 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Generator - No Code Required!</title>
+    <title>Portfolio Generator - Automated Deployment</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-panel, .preview-panel {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+        
+        .preview-panel {
+            position: sticky;
+            top: 20px;
         }
         
         h1 {
             color: #333;
             margin-bottom: 10px;
-            font-size: 2em;
+            font-size: 1.8em;
         }
         
         .subtitle {
             color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-size: 0.95em;
         }
         
         .section {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #f0f0f0;
         }
         
-        .section:last-child {
-            border-bottom: none;
-        }
-        
         .section-title {
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
         
@@ -61,6 +66,7 @@
             margin-bottom: 5px;
             color: #333;
             font-weight: 500;
+            font-size: 0.9em;
         }
         
         input[type="text"],
@@ -68,36 +74,36 @@
         input[type="url"],
         textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             transition: border-color 0.3s;
         }
         
-        input:focus,
-        textarea:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
         }
         
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 60px;
         }
         
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
+            transition: all 0.2s;
+            margin: 5px;
+            display: inline-block;
         }
         
         .btn:hover {
@@ -105,222 +111,382 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
-        .btn-secondary {
-            background: #6c757d;
-            margin-left: 10px;
-        }
+        .btn-success { background: #28a745; }
+        .btn-danger { background: #dc3545; }
+        .btn-warning { background: #ffc107; color: #333; }
         
         .item-block {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 2px solid #e0e0e0;
         }
         
-        .remove-btn {
+        .remove-btn, .add-btn {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 5px 15px;
+            padding: 5px 12px;
             border-radius: 5px;
             cursor: pointer;
-            float: right;
             font-size: 12px;
+            float: right;
         }
         
         .add-btn {
             background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+            float: none;
             margin-top: 10px;
-            font-size: 14px;
         }
         
-        .array-input {
-            margin-bottom: 10px;
-        }
-        
-        .help-text {
-            font-size: 12px;
-            color: #666;
-            margin-top: -10px;
-            margin-bottom: 10px;
-        }
-        
-        .preview-area {
-            background: #f8f9fa;
+        .steps-wizard {
+            background: #e7f3ff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
+            display: none;
         }
         
         .step {
-            background: #e7f3ff;
+            background: white;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-left: 4px solid #667eea;
         }
         
         .step-number {
             font-weight: bold;
             color: #667eea;
-            margin-right: 5px;
+            font-size: 1.2em;
+        }
+        
+        .step.active {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+        
+        .step.completed {
+            border-left-color: #6c757d;
+            background: #f8f9fa;
+            opacity: 0.7;
+        }
+        
+        .step-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        /* Preview Styles */
+        .preview-container {
+            background: #0f172a;
+            color: white;
+            min-height: 600px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .preview-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .preview-name {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .preview-title {
+            font-size: 1.3em;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        
+        .preview-bio {
+            color: #cbd5e1;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .preview-section {
+            margin: 30px 0;
+        }
+        
+        .preview-section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #60a5fa;
+        }
+        
+        .preview-item {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .preview-item-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        .preview-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .preview-skill {
+            background: #3b82f6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .help-text {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .preview-panel {
+                position: relative;
+                max-height: none;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎨 Portfolio Generator</h1>
-        <p class="subtitle">Fill in your information below. No coding required!</p>
-        
-        <form id="portfolioForm">
-            <!-- Basic Info -->
-            <div class="section">
-                <div class="section-title">👤 Basic Information</div>
-                <label>Your Full Name *</label>
-                <input type="text" id="name" required placeholder="John Doe">
-                
-                <label>Your Job Title/Profession *</label>
-                <input type="text" id="title" required placeholder="Software Engineer">
-                
-                <label>Short Bio (1-2 sentences) *</label>
-                <textarea id="bio" required placeholder="Building innovative solutions at the intersection of technology and design..."></textarea>
-                
-                <label>Email Address *</label>
-                <input type="email" id="email" required placeholder="your.email@example.com">
-            </div>
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <h1>🎨 Portfolio Generator</h1>
+            <p class="subtitle">Fill in your info • See live preview • Deploy automatically!</p>
             
-            <!-- Social Links -->
-            <div class="section">
-                <div class="section-title">🔗 Social Links</div>
-                <label>GitHub Username</label>
-                <input type="text" id="github" placeholder="yourusername">
+            <form id="portfolioForm">
+                <!-- Basic Info -->
+                <div class="section">
+                    <div class="section-title">👤 Basic Information</div>
+                    <label>Your Full Name *</label>
+                    <input type="text" id="name" required placeholder="John Doe" oninput="updatePreview()">
+                    
+                    <label>Your Job Title *</label>
+                    <input type="text" id="title" required placeholder="Software Engineer" oninput="updatePreview()">
+                    
+                    <label>Short Bio (1-2 sentences) *</label>
+                    <textarea id="bio" required placeholder="Building innovative solutions..." oninput="updatePreview()"></textarea>
+                    
+                    <label>Email Address *</label>
+                    <input type="email" id="email" required placeholder="your.email@example.com" oninput="updatePreview()">
+                </div>
                 
-                <label>LinkedIn Profile URL</label>
-                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                <!-- Social Links -->
+                <div class="section">
+                    <div class="section-title">🔗 Social Links</div>
+                    <label>GitHub Username</label>
+                    <input type="text" id="github" placeholder="yourusername" oninput="updatePreview()">
+                    
+                    <label>LinkedIn Profile URL</label>
+                    <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourprofile" oninput="updatePreview()">
+                    
+                    <label>Twitter/X Handle</label>
+                    <input type="text" id="twitter" placeholder="@yourhandle" oninput="updatePreview()">
+                </div>
                 
-                <label>Twitter/X Handle</label>
-                <input type="text" id="twitter" placeholder="@yourhandle">
-            </div>
+                <!-- Experience -->
+                <div class="section">
+                    <div class="section-title">💼 Work Experience</div>
+                    <div id="experiences">
+                        <div class="item-block">
+                            <label>Job Title *</label>
+                            <input type="text" class="exp-title" required placeholder="Software Engineer" oninput="updatePreview()">
+                            
+                            <label>Company Name *</label>
+                            <input type="text" class="exp-company" required placeholder="Tech Company Inc." oninput="updatePreview()">
+                            
+                            <label>Period *</label>
+                            <input type="text" class="exp-period" required placeholder="Jan 2023 - Present" oninput="updatePreview()">
+                            
+                            <label>Location</label>
+                            <input type="text" class="exp-location" placeholder="San Francisco, CA" oninput="updatePreview()">
+                            
+                            <label>Achievements (one per line) *</label>
+                            <textarea class="exp-achievements" required placeholder="Led a team...&#10;Increased performance..." oninput="updatePreview()"></textarea>
+                            
+                            <label>Technologies (comma-separated)</label>
+                            <input type="text" class="exp-tech" placeholder="React, Python, Node.js" oninput="updatePreview()">
+                            
+                            <button type="button" class="remove-btn" onclick="removeItem(this, 'experiences')">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addExperience()">+ Add Another Job</button>
+                </div>
+                
+                <!-- Projects -->
+                <div class="section">
+                    <div class="section-title">🚀 Projects</div>
+                    <div id="projects">
+                        <div class="item-block">
+                            <label>Project Name *</label>
+                            <input type="text" class="proj-name" required placeholder="My Awesome Project" oninput="updatePreview()">
+                            
+                            <label>Description *</label>
+                            <textarea class="proj-desc" required placeholder="A brief description..." oninput="updatePreview()"></textarea>
+                            
+                            <label>Technologies (comma-separated)</label>
+                            <input type="text" class="proj-tech" placeholder="React, Node.js" oninput="updatePreview()">
+                            
+                            <label>Project URL</label>
+                            <input type="url" class="proj-link" placeholder="https://github.com/you/project">
+                            
+                            <button type="button" class="remove-btn" onclick="removeItem(this, 'projects')">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" onclick="addProject()">+ Add Another Project</button>
+                </div>
+                
+                <!-- Skills -->
+                <div class="section">
+                    <div class="section-title">🛠️ Skills</div>
+                    <label>Your Skills (comma-separated) *</label>
+                    <textarea id="skills" required placeholder="Python, React, JavaScript, SQL" oninput="updatePreview()"></textarea>
+                    <p class="help-text">List all your technical skills separated by commas</p>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 20px; padding: 15px;">
+                    ✨ Generate & Deploy My Portfolio
+                </button>
+            </form>
             
-            <!-- Experience -->
-            <div class="section">
-                <div class="section-title">💼 Work Experience</div>
-                <div id="experiences">
-                    <div class="item-block">
-                        <label>Job Title *</label>
-                        <input type="text" class="exp-title" required placeholder="Software Engineer">
-                        
-                        <label>Company Name *</label>
-                        <input type="text" class="exp-company" required placeholder="Tech Company Inc.">
-                        
-                        <label>Period (e.g., "Jan 2023 - Present") *</label>
-                        <input type="text" class="exp-period" required placeholder="Jan 2023 - Present">
-                        
-                        <label>Location</label>
-                        <input type="text" class="exp-location" placeholder="San Francisco, CA">
-                        
-                        <label>Achievements (one per line) *</label>
-                        <textarea class="exp-achievements" required placeholder="Led a team of 5 developers&#10;Increased performance by 40%&#10;Deployed 3 major features"></textarea>
-                        
-                        <label>Technologies (comma-separated)</label>
-                        <input type="text" class="exp-tech" placeholder="React, Python, Node.js">
-                        
-                        <button type="button" class="remove-btn" onclick="removeItem(this, 'experiences')">Remove</button>
+            <!-- Deployment Wizard -->
+            <div id="stepsWizard" class="steps-wizard">
+                <h2 style="color: #667eea; margin-bottom: 20px;">🚀 Automated Deployment Steps</h2>
+                
+                <div id="step1" class="step active">
+                    <div class="step-number">Step 1:</div>
+                    <div style="margin-top: 10px;">
+                        <strong>Create Your Copy from Template</strong>
+                        <p style="margin: 10px 0; color: #666;">Click the button below to create your own GitHub repository</p>
+                        <a href="https://github.com/Akshita7844/portfolio-template/generate" target="_blank" class="btn step-btn">Use This Template →</a>
+                        <p style="margin-top: 10px; color: #666; font-size: 0.9em;">After creating your repo, come back and click "I've Created My Repo" below</p>
+                        <button onclick="completeStep(1)" class="btn btn-success" style="width: 100%; margin-top: 10px;">✓ I've Created My Repo</button>
                     </div>
                 </div>
-                <button type="button" class="add-btn" onclick="addExperience()">+ Add Another Job</button>
-            </div>
-            
-            <!-- Projects -->
-            <div class="section">
-                <div class="section-title">🚀 Projects</div>
-                <div id="projects">
-                    <div class="item-block">
-                        <label>Project Name *</label>
-                        <input type="text" class="proj-name" required placeholder="My Awesome Project">
-                        
-                        <label>Description *</label>
-                        <textarea class="proj-desc" required placeholder="A brief description of what the project does and why it matters..."></textarea>
-                        
-                        <label>Technologies (comma-separated)</label>
-                        <input type="text" class="proj-tech" placeholder="React, Node.js, MongoDB">
-                        
-                        <label>Project URL (GitHub or live site)</label>
-                        <input type="url" class="proj-link" placeholder="https://github.com/you/project">
-                        
-                        <label>Impact Category</label>
-                        <input type="text" class="proj-impact" placeholder="e.g., Web Development, AI/ML">
-                        
-                        <button type="button" class="remove-btn" onclick="removeItem(this, 'projects')">Remove</button>
+                
+                <div id="step2" class="step">
+                    <div class="step-number">Step 2:</div>
+                    <div style="margin-top: 10px;">
+                        <strong>Update Your Portfolio Code</strong>
+                        <p style="margin: 10px 0; color: #666;">Download your customized code and update it in GitHub</p>
+                        <button onclick="downloadAppJsx()" class="btn step-btn">📥 Download App.jsx</button>
+                        <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <strong>How to update:</strong>
+                            <ol style="margin: 10px 0 0 20px; color: #666;">
+                                <li>Go to your new repository on GitHub</li>
+                                <li>Navigate to: <code>portfolio-site/src/App.jsx</code></li>
+                                <li>Click the pencil icon (✏️) to edit</li>
+                                <li>Find and replace the <code>experiences</code> array (around line 51)</li>
+                                <li>Paste the downloaded code</li>
+                                <li>Also update your name (around line 412) and bio (line 418)</li>
+                                <li>Click "Commit changes"</li>
+                            </ol>
+                        </div>
+                        <button onclick="completeStep(2)" class="btn btn-success" style="width: 100%; margin-top: 15px;">✓ I've Updated My Code</button>
                     </div>
                 </div>
-                <button type="button" class="add-btn" onclick="addProject()">+ Add Another Project</button>
-            </div>
-            
-            <!-- Skills -->
-            <div class="section">
-                <div class="section-title">🛠️ Skills</div>
-                <label>Your Skills (comma-separated) *</label>
-                <textarea id="skills" required placeholder="Python, React, JavaScript, SQL, Git, Docker"></textarea>
-                <p class="help-text">List all your technical skills separated by commas</p>
-            </div>
-            
-            <!-- Education -->
-            <div class="section">
-                <div class="section-title">🎓 Education</div>
-                <label>Degree/Certification</label>
-                <input type="text" id="edu-degree" placeholder="Bachelor of Science in Computer Science">
                 
-                <label>Institution</label>
-                <input type="text" id="edu-school" placeholder="University Name">
+                <div id="step3" class="step">
+                    <div class="step-number">Step 3:</div>
+                    <div style="margin-top: 10px;">
+                        <strong>Deploy to Vercel (One-Click!)</strong>
+                        <p style="margin: 10px 0; color: #666;">Your portfolio will be live in 2 minutes!</p>
+                        <a id="vercelDeployLink" href="#" target="_blank" class="btn btn-success step-btn">🚀 Deploy to Vercel →</a>
+                        <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <strong>Deployment settings:</strong>
+                            <ul style="margin: 10px 0 0 20px; color: #666;">
+                                <li><strong>Root Directory:</strong> <code>portfolio-site</code> ← IMPORTANT!</li>
+                                <li><strong>Framework:</strong> Vite (auto-detected)</li>
+                                <li><strong>Build Command:</strong> npm run build</li>
+                                <li><strong>Output Directory:</strong> dist</li>
+                            </ul>
+                        </div>
+                        <button onclick="completeStep(3)" class="btn btn-success" style="width: 100%; margin-top: 15px;">✓ I've Deployed to Vercel</button>
+                    </div>
+                </div>
                 
-                <label>Period</label>
-                <input type="text" id="edu-period" placeholder="2018 - 2022">
+                <div id="step4" class="step">
+                    <div class="step-number">Step 4:</div>
+                    <div style="margin-top: 10px;">
+                        <strong>🎉 Done! Share Your Portfolio</strong>
+                        <p style="margin: 10px 0; color: #666;">Your portfolio is now live! Vercel will give you a URL like:</p>
+                        <div style="background: #1e293b; color: #60a5fa; padding: 15px; border-radius: 8px; margin: 10px 0; font-family: monospace;">
+                            https://your-repo-name.vercel.app
+                        </div>
+                        <p style="margin: 10px 0; color: #666;">✨ Every time you update your GitHub repo, your live site automatically updates!</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="step">
-                <span class="step-number">📝 Step 1:</span> Fill in all your information above
-            </div>
-            
-            <button type="submit" class="btn">Generate My Portfolio Code</button>
-            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear All</button>
-        </form>
+        </div>
         
-        <div id="output" style="display:none;" class="section">
-            <div class="section-title">✨ Your Generated Code</div>
-            <div class="preview-area">
-                <pre id="generatedCode"></pre>
+        <!-- Live Preview Panel -->
+        <div class="preview-panel">
+            <h2 style="color: #333; margin-bottom: 15px;">📱 Live Preview</h2>
+            <p class="subtitle" style="margin-bottom: 20px;">See how your portfolio looks as you type!</p>
+            
+            <div class="preview-container" id="preview">
+                <div class="preview-header">
+                    <div class="preview-name" id="previewName">Your Name</div>
+                    <div class="preview-title" id="previewTitle">Your Job Title</div>
+                    <div class="preview-bio" id="previewBio">Your bio will appear here...</div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="preview-section-title">💼 Experience</div>
+                    <div id="previewExperience">
+                        <div class="preview-item">
+                            <div class="preview-item-title">Job Title at Company</div>
+                            <div style="color: #94a3b8; margin-top: 5px;">Period • Location</div>
+                            <div style="color: #cbd5e1; margin-top: 10px; font-size: 0.9em;">Your achievements will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="preview-section-title">🚀 Projects</div>
+                    <div id="previewProjects">
+                        <div class="preview-item">
+                            <div class="preview-item-title">Project Name</div>
+                            <div style="color: #cbd5e1; margin-top: 10px; font-size: 0.9em;">Project description will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-section">
+                    <div class="preview-section-title">🛠️ Skills</div>
+                    <div class="preview-skills" id="previewSkills">
+                        <span class="preview-skill">Your skills</span>
+                    </div>
+                </div>
             </div>
-            <p class="help-text">Copy the code above, then follow these steps:</p>
-            <div class="step">
-                <span class="step-number">1.</span> Use the template: <a href="https://github.com/Akshita7844/portfolio-template/generate" target="_blank">Click here</a>
-            </div>
-            <div class="step">
-                <span class="step-number">2.</span> Go to <code>portfolio-site/src/App.jsx</code> in your new repo
-            </div>
-            <div class="step">
-                <span class="step-number">3.</span> Replace the entire <code>experiences</code>, <code>projects</code>, and other arrays with the code above
-            </div>
-            <div class="step">
-                <span class="step-number">4.</span> Update your name, title, and bio in the hero section
-            </div>
-            <div class="step">
-                <span class="step-number">5.</span> Deploy to Vercel (one-click deploy button in README)
-            </div>
-            <button class="btn" onclick="downloadFile()">Download as App.jsx</button>
         </div>
     </div>
     
     <script>
         let generatedData = null;
+        let currentStep = 0;
         
         function addExperience() {
             const container = document.getElementById('experiences');
@@ -328,17 +494,17 @@
             newExp.className = 'item-block';
             newExp.innerHTML = `
                 <label>Job Title *</label>
-                <input type="text" class="exp-title" required placeholder="Software Engineer">
+                <input type="text" class="exp-title" required placeholder="Software Engineer" oninput="updatePreview()">
                 <label>Company Name *</label>
-                <input type="text" class="exp-company" required placeholder="Tech Company Inc.">
-                <label>Period (e.g., "Jan 2023 - Present") *</label>
-                <input type="text" class="exp-period" required placeholder="Jan 2023 - Present">
+                <input type="text" class="exp-company" required placeholder="Tech Company Inc." oninput="updatePreview()">
+                <label>Period *</label>
+                <input type="text" class="exp-period" required placeholder="Jan 2023 - Present" oninput="updatePreview()">
                 <label>Location</label>
-                <input type="text" class="exp-location" placeholder="San Francisco, CA">
+                <input type="text" class="exp-location" placeholder="San Francisco, CA" oninput="updatePreview()">
                 <label>Achievements (one per line) *</label>
-                <textarea class="exp-achievements" required placeholder="Led a team of 5 developers&#10;Increased performance by 40%"></textarea>
+                <textarea class="exp-achievements" required placeholder="Led a team..." oninput="updatePreview()"></textarea>
                 <label>Technologies (comma-separated)</label>
-                <input type="text" class="exp-tech" placeholder="React, Python, Node.js">
+                <input type="text" class="exp-tech" placeholder="React, Python" oninput="updatePreview()">
                 <button type="button" class="remove-btn" onclick="removeItem(this, 'experiences')">Remove</button>
             `;
             container.appendChild(newExp);
@@ -350,15 +516,13 @@
             newProj.className = 'item-block';
             newProj.innerHTML = `
                 <label>Project Name *</label>
-                <input type="text" class="proj-name" required placeholder="My Awesome Project">
+                <input type="text" class="proj-name" required placeholder="My Awesome Project" oninput="updatePreview()">
                 <label>Description *</label>
-                <textarea class="proj-desc" required placeholder="A brief description..."></textarea>
+                <textarea class="proj-desc" required placeholder="A brief description..." oninput="updatePreview()"></textarea>
                 <label>Technologies (comma-separated)</label>
-                <input type="text" class="proj-tech" placeholder="React, Node.js">
+                <input type="text" class="proj-tech" placeholder="React, Node.js" oninput="updatePreview()">
                 <label>Project URL</label>
                 <input type="url" class="proj-link" placeholder="https://github.com/you/project">
-                <label>Impact Category</label>
-                <input type="text" class="proj-impact" placeholder="Web Development">
                 <button type="button" class="remove-btn" onclick="removeItem(this, 'projects')">Remove</button>
             `;
             container.appendChild(newProj);
@@ -366,16 +530,61 @@
         
         function removeItem(btn, containerId) {
             btn.closest('.item-block').remove();
+            updatePreview();
         }
         
-        function clearForm() {
-            if (confirm('Are you sure you want to clear all fields?')) {
-                document.getElementById('portfolioForm').reset();
-                document.getElementById('experiences').innerHTML = '';
-                document.getElementById('projects').innerHTML = '';
-                addExperience();
-                addProject();
-                document.getElementById('output').style.display = 'none';
+        function updatePreview() {
+            const name = document.getElementById('name').value || 'Your Name';
+            const title = document.getElementById('title').value || 'Your Job Title';
+            const bio = document.getElementById('bio').value || 'Your bio will appear here...';
+            
+            document.getElementById('previewName').textContent = name;
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewBio').textContent = bio;
+            
+            // Update experiences
+            const expHtml = [];
+            document.querySelectorAll('#experiences .item-block').forEach(block => {
+                const title = block.querySelector('.exp-title').value;
+                const company = block.querySelector('.exp-company').value;
+                const period = block.querySelector('.exp-period').value;
+                const location = block.querySelector('.exp-location').value;
+                const achievements = block.querySelector('.exp-achievements').value.split('\n').filter(a => a.trim()).slice(0, 2);
+                
+                if (title || company) {
+                    expHtml.push(`
+                        <div class="preview-item">
+                            <div class="preview-item-title">${title || 'Job Title'} at ${company || 'Company'}</div>
+                            <div style="color: #94a3b8; margin-top: 5px;">${period || 'Period'} ${location ? '• ' + location : ''}</div>
+                            ${achievements.length > 0 ? '<div style="color: #cbd5e1; margin-top: 10px; font-size: 0.9em;">' + achievements.join('<br>') + '</div>' : ''}
+                        </div>
+                    `);
+                }
+            });
+            document.getElementById('previewExperience').innerHTML = expHtml.join('') || '<div class="preview-item"><div style="color: #94a3b8;">Add your work experience</div></div>';
+            
+            // Update projects
+            const projHtml = [];
+            document.querySelectorAll('#projects .item-block').forEach(block => {
+                const name = block.querySelector('.proj-name').value;
+                const desc = block.querySelector('.proj-desc').value;
+                if (name || desc) {
+                    projHtml.push(`
+                        <div class="preview-item">
+                            <div class="preview-item-title">${name || 'Project Name'}</div>
+                            <div style="color: #cbd5e1; margin-top: 10px; font-size: 0.9em;">${desc || 'Project description...'}</div>
+                        </div>
+                    `);
+                }
+            });
+            document.getElementById('previewProjects').innerHTML = projHtml.join('') || '<div class="preview-item"><div style="color: #94a3b8;">Add your projects</div></div>';
+            
+            // Update skills
+            const skills = document.getElementById('skills').value.split(',').map(s => s.trim()).filter(s => s).slice(0, 8);
+            if (skills.length > 0) {
+                document.getElementById('previewSkills').innerHTML = skills.map(skill => `<span class="preview-skill">${skill}</span>`).join('');
+            } else {
+                document.getElementById('previewSkills').innerHTML = '<span class="preview-skill">Add your skills</span>';
             }
         }
         
@@ -390,12 +599,7 @@
                 github: document.getElementById('github').value,
                 linkedin: document.getElementById('linkedin').value,
                 twitter: document.getElementById('twitter').value,
-                skills: document.getElementById('skills').value.split(',').map(s => s.trim()).filter(s => s),
-                education: {
-                    degree: document.getElementById('edu-degree').value,
-                    school: document.getElementById('edu-school').value,
-                    period: document.getElementById('edu-period').value
-                }
+                skills: document.getElementById('skills').value.split(',').map(s => s.trim()).filter(s => s)
             };
             
             // Collect experiences
@@ -426,18 +630,40 @@
                     link: block.querySelector('.proj-link').value || null,
                     isCompanyProject: false,
                     gradient: gradients[index % gradients.length],
-                    impact: block.querySelector('.proj-impact').value || 'Project Impact'
+                    impact: 'Project Impact'
                 });
             });
             formData.projects = projects;
             
             generatedData = formData;
-            generateCode(formData);
+            
+            // Show deployment wizard
+            document.getElementById('stepsWizard').style.display = 'block';
+            document.getElementById('stepsWizard').scrollIntoView({ behavior: 'smooth' });
+            
+            // Set up Vercel deploy link (will need user's repo name, but we can guide them)
+            // For now, provide generic link
+            document.getElementById('vercelDeployLink').href = 'https://vercel.com/new';
         });
         
-        function generateCode(data) {
-            // Generate experiences array
-            let expCode = data.experiences.map(exp => {
+        function completeStep(stepNum) {
+            document.getElementById(`step${stepNum}`).classList.remove('active');
+            document.getElementById(`step${stepNum}`).classList.add('completed');
+            
+            if (stepNum < 4) {
+                document.getElementById(`step${stepNum + 1}`).classList.add('active');
+                document.getElementById(`step${stepNum + 1}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        
+        function downloadAppJsx() {
+            if (!generatedData) {
+                alert('Please generate your portfolio first!');
+                return;
+            }
+            
+            // Generate complete code snippets
+            let expCode = generatedData.experiences.map(exp => {
                 const achievements = exp.achievements.map(a => `        "${a.replace(/"/g, '\\"')}"`).join(',\n');
                 const tech = exp.technologies.map(t => `"${t}"`).join(', ');
                 return `    {
@@ -452,8 +678,7 @@ ${achievements}
     }`;
             }).join(',\n');
             
-            // Generate projects array
-            let projCode = data.projects.map(proj => {
+            let projCode = generatedData.projects.map(proj => {
                 const tech = proj.technologies.map(t => `"${t}"`).join(', ');
                 const link = proj.link ? `"${proj.link.replace(/"/g, '\\"')}"` : 'null';
                 return `    {
@@ -463,12 +688,11 @@ ${achievements}
       link: ${link},
       isCompanyProject: false,
       gradient: "${proj.gradient}",
-      impact: "${proj.impact.replace(/"/g, '\\"')}"
+      impact: "${proj.impact}"
     }`;
             }).join(',\n');
             
-            // Generate skills array (simplified)
-            const skillsList = data.skills.map((skill, i) => {
+            const skillsList = generatedData.skills.map((skill, i) => {
                 const colors = ['from-yellow-500 to-yellow-600', 'from-blue-500 to-blue-600', 'from-cyan-500 to-cyan-600', 'from-green-500 to-green-600', 'from-purple-500 to-purple-600'];
                 const categories = ['Programming', 'Frontend', 'Backend', 'AI/ML', 'Tools'];
                 return `    { name: "${skill}", color: "${colors[i % colors.length]}", category: "${categories[i % categories.length]}" }`;
@@ -476,8 +700,8 @@ ${achievements}
             
             const code = `// ============================================
 // COPY THIS CODE TO: portfolio-site/src/App.jsx
+// Replace the existing arrays starting around line 51
 // ============================================
-// Replace the existing arrays with these:
 
 const experiences = [
 ${expCode}
@@ -492,45 +716,39 @@ ${skillsList}
   ]
 
 // ============================================
-// ALSO UPDATE IN App.jsx:
+// ALSO UPDATE THESE IN App.jsx:
 // ============================================
-// 1. Find your name (around line 412):
-<span className="text-white">${data.name}</span>
+// Line ~412: Replace name
+<span className="text-white">${generatedData.name}</span>
 
-// 2. Find your title (around line 415):
-<span className="gradient-text">${data.title}</span>
+// Line ~415: Replace title  
+<span className="gradient-text">${generatedData.title}</span>
 
-// 3. Find your bio (around line 418):
-Building intelligent systems... // Replace with: ${data.bio.substring(0, 50)}...
+// Line ~418: Replace bio
+${generatedData.bio}
 
-// 4. Find email links (around line 422):
-href="mailto:${data.email}"
+// Line ~422: Replace email
+href="mailto:${generatedData.email}"
 
-// 5. Find social links (footer section):
-${data.github ? `href="https://github.com/${data.github}"` : '// Add GitHub link'}
-${data.linkedin ? `href="${data.linkedin}"` : '// Add LinkedIn link'}
-${data.twitter ? `href="https://twitter.com/${data.twitter.replace('@', '')}"` : '// Add Twitter link'}`;
+// Footer section: Update social links
+${generatedData.github ? `href="https://github.com/${generatedData.github}"` : '// Add GitHub'}
+${generatedData.linkedin ? `href="${generatedData.linkedin}"` : '// Add LinkedIn'}
+${generatedData.twitter ? `href="https://twitter.com/${generatedData.twitter.replace('@', '')}"` : '// Add Twitter'}`;
             
-            document.getElementById('generatedCode').textContent = code;
-            document.getElementById('output').style.display = 'block';
-            document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        function downloadFile() {
-            const code = document.getElementById('generatedCode').textContent;
             const blob = new Blob([code], { type: 'text/javascript' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'portfolio-data.txt';
+            a.download = 'portfolio-code.txt';
             a.click();
             URL.revokeObjectURL(url);
+            
+            completeStep(2);
         }
         
-        // Initialize with one experience and one project
+        // Initialize
         addExperience();
         addProject();
     </script>
 </body>
 </html>
-
