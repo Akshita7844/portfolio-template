@@ -48,8 +48,8 @@ function App() {
     }
   }
 
-  // ======= BEGIN_DATA_BLOCK (experiences, projects, skills) =======
-const experiences = [
+  {/* ======= BEGIN_DATA_BLOCK (experiences, projects, skills) ======= */}
+  const experiences = [
     {
       title: "AI/ML Engineer",
       company: "AIRMAN Aeronautics",
@@ -409,8 +409,8 @@ const experiences = [
               </div>
             </div>
 
-            // ======= BEGIN_HERO_BLOCK (name, title, bio, email) =======
-<h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+            {/* ======= BEGIN_HERO_BLOCK (name, title, bio, email) ======= */}
+            <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
               <span className="gradient-text">Hi, I'm</span>
               <br />
               <span className="text-white">Akshita Mishra</span>
@@ -435,7 +435,7 @@ const experiences = [
                 View My Work
               </a>
             </div>
-// ======= END_HERO_BLOCK =======
+            {/* ======= END_HERO_BLOCK ======= */}
 
             {/* Social Icons */}
             <div className="flex items-center justify-center gap-6">
